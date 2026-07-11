@@ -489,6 +489,147 @@
   .footer-links a:hover{ color: var(--ink); }
   .footer-links svg{ width:16px; height:16px; }
 
+  .redeem-overlay{
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(6,5,12,0.72);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .25s ease, visibility .25s ease;
+  }
+  .redeem-overlay.show{ opacity: 1; visibility: visible; }
+
+  .redeem-modal{
+    width: min(460px, 100%);
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 34px 32px 28px;
+    position: relative;
+    transform: translateY(14px) scale(0.97);
+    transition: transform .3s cubic-bezier(.16,1,.3,1);
+  }
+  .redeem-overlay.show .redeem-modal{ transform: translateY(0) scale(1); }
+
+  .redeem-close{
+    position: absolute;
+    top: 18px; right: 18px;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display:flex; align-items:center; justify-content:center;
+    background: var(--glass-fill-strong);
+    border: 1px solid var(--glass-border);
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition: background .2s ease, color .2s ease;
+  }
+  .redeem-close:hover{ background: rgba(255,255,255,0.14); color: var(--ink); }
+  .redeem-close svg{ width:16px; height:16px; }
+
+  .redeem-icon{
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    display:flex; align-items:center; justify-content:center;
+    background: rgba(125,188,235,0.14);
+    color: var(--violet);
+    margin-bottom: 18px;
+  }
+  .redeem-icon svg{ width:26px; height:26px; }
+
+  .redeem-modal h2{
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .redeem-modal p.redeem-sub{
+    color: var(--ink-muted);
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin-bottom: 22px;
+  }
+
+  .redeem-key-box{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    padding: 14px 14px 14px 18px;
+    border-radius: var(--radius-sm);
+    background: rgba(0,0,0,0.28);
+    border: 1px solid var(--glass-border);
+    margin-bottom: 26px;
+  }
+  .redeem-key-box code{
+    flex: 1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+    word-break: break-all;
+  }
+  .redeem-copy-btn{
+    flex-shrink: 0;
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    display:flex; align-items:center; justify-content:center;
+    background: var(--glass-fill-strong);
+    border: 1px solid var(--glass-border);
+    color: var(--ink);
+    cursor: pointer;
+    transition: background .2s ease, transform .15s ease;
+  }
+  .redeem-copy-btn:hover{ background: rgba(255,255,255,0.16); }
+  .redeem-copy-btn:active{ transform: scale(0.94); }
+  .redeem-copy-btn svg{ width:17px; height:17px; }
+  .redeem-copy-btn.copied{ color: var(--jade); border-color: var(--jade-soft); }
+
+  .redeem-steps{
+    display:flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .redeem-steps .kicker{ margin-bottom: 14px; }
+  .redeem-step{
+    display:flex;
+    gap: 14px;
+    padding: 12px 0;
+    border-top: 1px solid var(--glass-border);
+  }
+  .redeem-step:first-of-type{ border-top: none; }
+  .redeem-step-icon{
+    flex-shrink: 0;
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    display:flex; align-items:center; justify-content:center;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--glass-border);
+    color: var(--jade);
+  }
+  .redeem-step-icon svg{ width:17px; height:17px; }
+  .redeem-step-copy h4{
+    font-size: 0.92rem;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .redeem-step-copy p{
+    color: var(--ink-muted);
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+  .redeem-step-copy .mono{
+    color: var(--violet);
+    font-size: 0.82rem;
+  }
+
+  @media (max-width: 560px){
+    .redeem-modal{ padding: 28px 22px 24px; }
+  }
+
   @media (max-width: 1040px){
     nav.links{ display:none; }
   }
@@ -735,12 +876,78 @@
         </a>
         <a href="https://discord.com/oauth2/authorize?client_id=1491110943873044640" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.32 4.37a17.5 17.5 0 00-4.35-1.35c-.19.34-.4.79-.55 1.15a16.3 16.3 0 00-4.85 0c-.15-.36-.37-.81-.56-1.15a17.4 17.4 0 00-4.35 1.35C2.6 8.6 1.9 12.7 2.2 16.75a17.6 17.6 0 005.35 2.72c.43-.59.82-1.22 1.15-1.88-.63-.24-1.23-.53-1.8-.88.15-.11.3-.23.44-.35a12.5 12.5 0 0010.32 0c.15.12.29.24.44.35-.57.35-1.18.64-1.8.88.33.66.72 1.29 1.15 1.88a17.6 17.6 0 005.35-2.72c.36-4.7-.78-8.75-3.42-12.38zM9.68 14.4c-.94 0-1.71-.87-1.71-1.94s.75-1.94 1.71-1.94 1.73.88 1.71 1.94c0 1.07-.75 1.94-1.71 1.94zm5.65 0c-.94 0-1.71-.87-1.71-1.94s.75-1.94 1.71-1.94 1.73.88 1.71 1.94c0 1.07-.75 1.94-1.71 1.94z"/></svg>
-          Invite
+          Discord
         </a>
       </div>
     </div>
   </div>
 </footer>
+
+<div class="redeem-overlay" id="redeemOverlay" role="dialog" aria-modal="true" aria-labelledby="redeemTitle">
+  <div class="redeem-modal glass">
+    <div class="redeem-close" id="redeemClose" role="button" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </div>
+
+    <div class="redeem-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+    </div>
+
+    <h2 id="redeemTitle">Your key is ready</h2>
+    <p class="redeem-sub">Copy this key and bring it back to Discord to claim your reward.</p>
+
+    <div class="redeem-key-box">
+      <code id="redeemKeyText">—</code>
+      <div class="redeem-copy-btn" id="redeemCopyBtn" role="button" aria-label="Copy key">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" id="redeemCopyIcon"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      </div>
+    </div>
+
+    <div class="redeem-steps">
+      <span class="kicker">How to use it</span>
+
+      <div class="redeem-step">
+        <div class="redeem-step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        </div>
+        <div class="redeem-step-copy">
+          <h4>Copy your key</h4>
+          <p>Tap the copy icon above to save it to your clipboard.</p>
+        </div>
+      </div>
+
+      <div class="redeem-step">
+        <div class="redeem-step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.32 4.37a17.5 17.5 0 00-4.35-1.35c-.19.34-.4.79-.55 1.15a16.3 16.3 0 00-4.85 0c-.15-.36-.37-.81-.56-1.15a17.4 17.4 0 00-4.35 1.35C2.6 8.6 1.9 12.7 2.2 16.75a17.6 17.6 0 005.35 2.72c.43-.59.82-1.22 1.15-1.88-.63-.24-1.23-.53-1.8-.88.15-.11.3-.23.44-.35a12.5 12.5 0 0010.32 0c.15.12.29.24.44.35-.57.35-1.18.64-1.8.88.33.66.72 1.29 1.15 1.88a17.6 17.6 0 005.35-2.72c.36-4.7-.78-8.75-3.42-12.38zM9.68 14.4c-.94 0-1.71-.87-1.71-1.94s.75-1.94 1.71-1.94 1.73.88 1.71 1.94c0 1.07-.75 1.94-1.71 1.94zm5.65 0c-.94 0-1.71-.87-1.71-1.94s.75-1.94 1.71-1.94 1.73.88 1.71 1.94c0 1.07-.75 1.94-1.71 1.94z"/></svg>
+        </div>
+        <div class="redeem-step-copy">
+          <h4>Go back to your Discord server</h4>
+          <p>Switch back to the server where you ran the command.</p>
+        </div>
+      </div>
+
+      <div class="redeem-step">
+        <div class="redeem-step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+        </div>
+        <div class="redeem-step-copy">
+          <h4>Run <span class="mono">/redeem</span> again</h4>
+          <p>Paste the key into the <span class="mono">key</span> field when prompted.</p>
+        </div>
+      </div>
+
+      <div class="redeem-step">
+        <div class="redeem-step-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <div class="redeem-step-copy">
+          <h4>Confirm and you're done</h4>
+          <p>Your reward is added to your account instantly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
   (function(){
@@ -770,6 +977,55 @@
     dots.forEach((dot, i) => dot.addEventListener('click', () => { show(i); resetTimer(); }));
 
     resetTimer();
+  })();
+
+  (function(){
+    const overlay = document.getElementById('redeemOverlay');
+    const keyText = document.getElementById('redeemKeyText');
+    const copyBtn = document.getElementById('redeemCopyBtn');
+    const copyIcon = document.getElementById('redeemCopyIcon');
+    const closeBtn = document.getElementById('redeemClose');
+
+    const params = new URLSearchParams(window.location.search);
+    const key = params.get('key');
+
+    if (!key) return;
+
+    keyText.textContent = key;
+
+    function openModal(){
+      overlay.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(){
+      overlay.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    openModal();
+
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(key);
+      } catch (err) {
+        const temp = document.createElement('textarea');
+        temp.value = key;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+      }
+      copyIcon.innerHTML = '<path d="M20 6L9 17l-5-5"/>';
+      copyBtn.classList.add('copied');
+      setTimeout(() => {
+        copyIcon.innerHTML = '<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>';
+        copyBtn.classList.remove('copied');
+      }, 1800);
+    });
   })();
 </script>
 
