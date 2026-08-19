@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Longba — Discord Economy &amp; Casino Bot</title>
+<title>Longba — Discord Economy & Casino Bot</title>
 <meta name="description" content="Longba: ang Discord bot na may casino games, economy, music, at social system.">
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,6 +42,7 @@
     color: var(--text);
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
+    position: relative;
   }
   ::selection{ background: var(--blurple-soft); color: var(--text); }
   a{ color: inherit; text-decoration: none; }
@@ -52,23 +53,60 @@
 
   .container{ max-width: 1120px; margin: 0 auto; padding: 0 28px; }
 
-  
-  header{ position: sticky; top: 0; z-index: 50; background: rgba(30,31,34,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
-  .navbar{ max-width: 1120px; margin: 0 auto; display:flex; align-items:center; justify-content:space-between; padding: 16px 28px; flex-wrap: wrap; row-gap: 10px; }
-  .brand{ display:flex; align-items:center; gap: 10px; font-family:'Red Hat Display', sans-serif; font-weight: 900; font-size: 1.2rem; }
-  .brand-mark{ width: 32px; height: 32px; border-radius: 9px; overflow:hidden; }
-  .brand-mark img{ width:100%; height:100%; object-fit:cover; display:block; }
-  nav.links{ display:flex; gap: 28px; font-size: 0.94rem; font-weight: 600; color: var(--text-muted); }
-  nav.links a{ transition: color .15s ease; }
-  nav.links a:hover{ color: var(--text); }
+  /* ========== FLOATING PARTICLES ========== */
+  .particles{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .particle{
+    position: absolute;
+    font-size: 18px;
+    opacity: 0.18;
+    animation: floatParticle linear infinite;
+    user-select: none;
+  }
+  @keyframes floatParticle{
+    0%{ transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10%{ opacity: 0.25; }
+    90%{ opacity: 0.18; }
+    100%{ transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+  }
 
+  /* ========== HEADER ========== */
+  header{ 
+    position: sticky; top: 0; z-index: 50; 
+    background: rgba(30,31,34,0.82); 
+    backdrop-filter: blur(14px); 
+    border-bottom: 1px solid var(--border);
+    transition: background .3s ease;
+  }
+  .navbar{ max-width: 1120px; margin: 0 auto; display:flex; align-items:center; justify-content:space-between; padding: 14px 28px; flex-wrap: wrap; row-gap: 10px; }
+  .brand{ display:flex; align-items:center; gap: 10px; font-family:'Red Hat Display', sans-serif; font-weight: 900; font-size: 1.2rem; }
+  .brand-mark{ 
+    width: 36px; height: 36px; border-radius: 10px; overflow:hidden;
+    animation: catBounce 2.8s ease-in-out infinite;
+    box-shadow: 0 0 0 0 rgba(111,168,220,0.4);
+  }
+  .brand-mark img{ width:100%; height:100%; object-fit:cover; display:block; }
+  @keyframes catBounce{
+    0%, 100%{ transform: translateY(0); }
+    50%{ transform: translateY(-5px); }
+  }
+  nav.links{ display:flex; gap: 28px; font-size: 0.94rem; font-weight: 600; color: var(--text-muted); }
+  nav.links a{ transition: color .2s ease, transform .2s ease; }
+  nav.links a:hover{ color: var(--text); transform: translateY(-1px); }
+
+  /* ========== BUTTONS ========== */
   .btn{
     display:inline-flex; align-items:center; gap: 8px; padding: 11px 20px; border-radius: 999px;
     font-weight: 700; font-size: 0.9rem; border: none; cursor: pointer;
-    transition: transform .15s ease, background .15s ease; white-space: nowrap;
+    transition: transform .2s ease, background .2s ease, box-shadow .2s ease; white-space: nowrap;
   }
   .btn svg{ width:16px; height:16px; }
-  .btn:hover{ transform: translateY(-1px); }
+  .btn:hover{ transform: translateY(-2px); }
   .btn-primary{
     background: linear-gradient(180deg, #97C2EC 0%, #7CADD9 60%, #6C9BC7 100%);
     color: #fff;
@@ -78,35 +116,84 @@
     border: none;
     box-shadow: 0 4px 0 #343E61, 0 9px 20px rgba(20,24,40,0.45), inset 0 1px 0 rgba(255,255,255,0.45);
     position: relative; top: 0;
+    animation: btnGlow 3s ease-in-out infinite;
   }
-  .btn-primary:hover{ filter: brightness(1.04); }
+  @keyframes btnGlow{
+    0%, 100%{ box-shadow: 0 4px 0 #343E61, 0 9px 20px rgba(20,24,40,0.45), inset 0 1px 0 rgba(255,255,255,0.45); }
+    50%{ box-shadow: 0 4px 0 #343E61, 0 12px 28px rgba(111,168,220,0.35), inset 0 1px 0 rgba(255,255,255,0.45); }
+  }
+  .btn-primary:hover{ filter: brightness(1.06); }
   .btn-primary:active{ top: 3px; box-shadow: 0 1px 0 #343E61, 0 4px 12px rgba(20,24,40,0.4), inset 0 1px 0 rgba(255,255,255,0.45); }
   .btn-secondary{ background: var(--bg-card); color: var(--text); border: 1px solid var(--border); }
   .btn-secondary:hover{ background: var(--bg-card-hover); }
   .btn-sm{ padding: 9px 16px; font-size: 0.84rem; }
   .btn-lg{ padding: 15px 30px; font-size: 1rem; }
 
-  
-  .hero{ position: relative; padding: 90px 0 60px; overflow: hidden; }
+  /* ========== HERO ========== */
+  .hero{ position: relative; padding: 100px 0 70px; overflow: hidden; z-index: 1; }
   .hero-blob{
-    position:absolute; top:-260px; left:50%; transform: translateX(-50%);
-    width: 900px; height: 900px; border-radius: 50%;
+    position:absolute; top:-280px; left:50%; transform: translateX(-50%);
+    width: 1000px; height: 1000px; border-radius: 50%;
     background: radial-gradient(circle, var(--blurple) 0%, transparent 68%);
-    opacity: 0.22; filter: blur(40px); pointer-events:none;
+    opacity: 0.2; filter: blur(50px); pointer-events:none;
+    animation: blobPulse 8s ease-in-out infinite;
   }
-  .hero-inner{ position:relative; max-width: 680px; margin: 0 auto; text-align:center; }
+  @keyframes blobPulse{
+    0%, 100%{ transform: translateX(-50%) scale(1); opacity: 0.18; }
+    50%{ transform: translateX(-50%) scale(1.08); opacity: 0.26; }
+  }
+  .hero-inner{ position:relative; max-width: 720px; margin: 0 auto; text-align:center; }
+  
+  .hero-cat{
+    width: 110px; height: 110px;
+    margin: 0 auto 28px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 0 4px rgba(111,168,220,0.25);
+    animation: floatCat 4s ease-in-out infinite;
+  }
+  .hero-cat img{ width:100%; height:100%; object-fit:cover; display:block; }
+  @keyframes floatCat{
+    0%, 100%{ transform: translateY(0) rotate(-2deg); }
+    50%{ transform: translateY(-14px) rotate(2deg); }
+  }
+
   .eyebrow{
     display:inline-flex; align-items:center; gap:8px; padding: 7px 16px; border-radius: 999px;
     background: var(--blurple-soft); border: 1px solid rgba(88,101,242,0.3); color: #A6AEFF;
-    font-size: 0.8rem; font-weight: 700; margin-bottom: 24px;
+    font-size: 0.8rem; font-weight: 700; margin-bottom: 22px;
+    animation: fadeUp 0.8s ease both;
   }
-  .hero h1{ font-size: clamp(2.1rem, 5vw, 3.4rem); margin-bottom: 20px; }
-  .hero h1 .hi{ color: var(--blurple); }
-  .hero p.lead{ color: var(--text-muted); font-size: 1.08rem; line-height: 1.65; max-width: 50ch; margin: 0 auto 32px; }
-  .hero-actions{ display:flex; gap: 12px; justify-content:center; flex-wrap:wrap; }
+  .hero h1{ 
+    font-size: clamp(2.2rem, 5.2vw, 3.5rem); margin-bottom: 20px;
+    animation: fadeUp 0.9s 0.1s ease both;
+  }
+  .hero h1 .hi{ 
+    color: var(--blurple);
+    background: linear-gradient(90deg, #8EC4EF, #6FA8DC, #A6AEFF, #6FA8DC);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 4s linear infinite;
+  }
+  @keyframes shimmer{
+    to{ background-position: 200% center; }
+  }
+  .hero p.lead{ 
+    color: var(--text-muted); font-size: 1.08rem; line-height: 1.65; max-width: 50ch; margin: 0 auto 32px;
+    animation: fadeUp 1s 0.2s ease both;
+  }
+  .hero-actions{ 
+    display:flex; gap: 12px; justify-content:center; flex-wrap:wrap;
+    animation: fadeUp 1.1s 0.3s ease both;
+  }
+  @keyframes fadeUp{
+    from{ opacity:0; transform: translateY(24px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
 
-  
-  section{ padding: 60px 0; }
+  /* ========== SECTIONS ========== */
+  section{ padding: 60px 0; position: relative; z-index: 1; }
   .feature-row{
     display:grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items:center;
     padding: 56px 0;
@@ -123,10 +210,17 @@
     display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono', monospace;
     font-size: 0.84rem; padding: 8px 14px; border-radius: var(--radius-sm);
     background: var(--bg-card); border: 1px solid var(--border); color: var(--text);
+    transition: transform .2s ease, border-color .2s ease;
   }
+  .feature-copy .cmd-pill:hover{ transform: translateY(-2px); border-color: rgba(111,168,220,0.4); }
   .feature-shot{
     display:flex; align-items:center; justify-content:center; padding: 24px;
     background: var(--bg-raised); border-radius: var(--radius-lg); border: 1px solid var(--border);
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .feature-shot:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
   }
   .feature-shot img{ width: 100%; max-width: 420px; border-radius: var(--radius-md); display:block; }
 
@@ -137,7 +231,6 @@
 
   .divider{ height: 1px; background: var(--border); }
 
-  
   .section-head{ max-width: 620px; margin-bottom: 36px; }
   .section-head .kicker{ font-family:'JetBrains Mono', monospace; font-size: 0.78rem; color: #A6AEFF; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 10px; display:block; font-weight:600; }
   .section-head h2{ font-size: clamp(1.5rem, 2.6vw, 2rem); margin-bottom: 10px; }
@@ -146,51 +239,80 @@
   .games-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
   .game-card{
     padding: 20px; border-radius: var(--radius-md); background: var(--bg-raised);
-    border: 1px solid var(--border); transition: background .15s ease, border-color .15s ease, transform .15s ease;
+    border: 1px solid var(--border); 
+    transition: background .2s ease, border-color .2s ease, transform .25s ease, box-shadow .25s ease;
   }
-  .game-card:hover{ background: var(--bg-card); border-color: rgba(88,101,242,0.4); transform: translateY(-2px); }
+  .game-card:hover{ 
+    background: var(--bg-card); 
+    border-color: rgba(111,168,220,0.45); 
+    transform: translateY(-6px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+  }
   .game-card .g-icon{
     width: 38px; height:38px; border-radius: 9px; display:flex; align-items:center; justify-content:center;
     background: var(--icon-bg, var(--blurple-soft)); color: var(--icon-color, var(--blurple)); margin-bottom: 14px;
+    transition: transform .3s ease;
   }
+  .game-card:hover .g-icon{ transform: scale(1.12) rotate(6deg); }
   .game-card .g-icon svg{ width:19px; height:19px; }
   .game-card h4{ font-family:'Red Hat Display',sans-serif; font-size: 1rem; font-weight:800; margin-bottom:6px; }
   .game-card p{ color: var(--text-muted); font-size: 0.84rem; line-height:1.5; margin-bottom: 12px; }
   .game-card .cmd{ font-family:'JetBrains Mono', monospace; font-size:0.76rem; color: var(--text-faint); }
 
-  
   .tech-strip{ display:flex; flex-wrap:wrap; gap:10px; }
   .tech-pill{
     display:flex; align-items:center; gap:8px; font-family:'JetBrains Mono', monospace; font-size: 0.82rem;
     padding: 9px 16px; border-radius: 999px; background: var(--bg-raised); border: 1px solid var(--border); color: var(--text-muted);
+    transition: transform .2s ease, border-color .2s ease;
   }
-  .tech-pill .pip{ width:6px; height:6px; border-radius:50%; background: var(--green); }
+  .tech-pill:hover{ transform: translateY(-2px); border-color: rgba(111,168,220,0.4); }
+  .tech-pill .pip{ width:6px; height:6px; border-radius:50%; background: var(--green); animation: pipPulse 2s ease infinite; }
+  @keyframes pipPulse{
+    0%, 100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:0.5; transform:scale(0.8); }
+  }
 
-  
   .cta-panel{
     padding: 56px; text-align:center; border-radius: var(--radius-lg);
     background: linear-gradient(135deg, var(--sky-top), var(--sky-shadow));
     position: relative; overflow: hidden;
   }
-  .cta-panel h2{ font-size: clamp(1.6rem, 3.2vw, 2.2rem); margin-bottom: 12px; color: #fff; }
-  .cta-panel p{ color: rgba(255,255,255,0.85); margin-bottom: 28px; font-size: 1rem; }
-  .cta-actions{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
-  .cta-panel .btn-primary{ background: #fff; color: var(--blurple); }
+  .cta-panel::before{
+    content:'';
+    position:absolute; inset:0;
+    background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.15), transparent 50%);
+    pointer-events:none;
+  }
+  .cta-panel h2{ font-size: clamp(1.6rem, 3.2vw, 2.2rem); margin-bottom: 12px; color: #fff; position:relative; }
+  .cta-panel p{ color: rgba(255,255,255,0.85); margin-bottom: 28px; font-size: 1rem; position:relative; }
+  .cta-actions{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; position:relative; }
+  .cta-panel .btn-primary{ background: #fff; color: var(--blurple); animation: none; }
   .cta-panel .btn-primary:hover{ background: #f0f0ff; }
   .cta-panel .btn-secondary{ background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(255,255,255,0.25); }
   .cta-panel .btn-secondary:hover{ background: rgba(255,255,255,0.2); }
 
-  footer{ padding: 32px 0 46px; }
+  footer{ padding: 32px 0 46px; position: relative; z-index: 1; }
   .footer-inner{
     display:flex; align-items:center; justify-content:space-between; flex-wrap: wrap; gap: 16px;
     padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-faint); font-size: 0.84rem;
   }
   .footer-links{ display:flex; gap: 18px; align-items:center; }
-  .footer-links a{ display:flex; align-items:center; gap:6px; color: var(--text-muted); transition: color .15s ease;}
-  .footer-links a:hover{ color: var(--text); }
+  .footer-links a{ display:flex; align-items:center; gap:6px; color: var(--text-muted); transition: color .15s ease, transform .15s ease;}
+  .footer-links a:hover{ color: var(--text); transform: translateY(-1px); }
   .footer-links svg{ width:16px; height:16px; }
 
-  
+  /* ========== REVEAL ON SCROLL ========== */
+  .reveal{
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ========== REDEEM MODAL (kept) ========== */
   .redeem-overlay{
     position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center;
     padding: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(6px);
@@ -248,10 +370,14 @@
     .cta-panel{ padding: 36px 22px; }
     .hero-actions .btn{ width:100%; justify-content:center; }
     .hero-actions{ flex-direction: column; }
+    .hero-cat{ width: 90px; height: 90px; }
   }
 </style>
 </head>
 <body>
+
+<!-- Floating particles -->
+<div class="particles" id="particles"></div>
 
 <header>
   <div class="navbar">
@@ -277,6 +403,9 @@
   <section class="hero">
     <div class="hero-blob"></div>
     <div class="container hero-inner">
+      <div class="hero-cat">
+        <img src="logo.png" alt="Longba the black cat">
+      </div>
       <div class="eyebrow">🐈‍⬛ Economy · Casino · Music, all in one bot</div>
       <h1>Cards on the table, coins in play —<br>Longba runs your server <span class="hi">all day.</span></h1>
       <p class="lead">
@@ -297,7 +426,7 @@
   <section id="features">
     <div class="container">
 
-      <div class="feature-row">
+      <div class="feature-row reveal">
         <div class="feature-copy">
           <span class="kicker kicker-red">/baccarat</span>
           <h2>A live table, right in your channel.</h2>
@@ -309,7 +438,7 @@
         </div>
       </div>
 
-      <div class="feature-row reverse">
+      <div class="feature-row reverse reveal">
         <div class="feature-copy">
           <span class="kicker kicker-blurple">/blackjack</span>
           <h2>Hit, stand, or double down.</h2>
@@ -321,7 +450,7 @@
         </div>
       </div>
 
-      <div class="feature-row">
+      <div class="feature-row reveal">
         <div class="feature-copy">
           <span class="kicker kicker-green">/mines</span>
           <h2>Every safe tile raises the stakes.</h2>
@@ -333,7 +462,7 @@
         </div>
       </div>
 
-      <div class="feature-row reverse">
+      <div class="feature-row reverse reveal">
         <div class="feature-copy">
           <span class="kicker kicker-gold">/play</span>
           <h2>Music that doesn't stop the fun.</h2>
@@ -352,14 +481,14 @@
 
   <section id="games">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head reveal">
         <span class="kicker">More on the floor</span>
         <h2>Three more games, same wallet.</h2>
         <p>Cockfight, Color Game, and Coinflip round out the casino — each capped at 50,000 Coins per bet.</p>
       </div>
 
       <div class="games-grid">
-        <div class="game-card">
+        <div class="game-card reveal">
           <div class="g-icon" style="--icon-bg: var(--red-soft); --icon-color: #FF8C8E;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20c0-4 3-6 3-10a3 3 0 016 0c0 1.5-1 2-1 3.5 2 0 4 1.5 4 4.5"/><path d="M9 10c-1-1.5-3-1.5-4-.5"/><circle cx="13" cy="8" r=".6" fill="currentColor" stroke="none"/></svg>
           </div>
@@ -368,7 +497,7 @@
           <span class="cmd mono">/cockfight</span>
         </div>
 
-        <div class="game-card">
+        <div class="game-card reveal">
           <div class="g-icon" style="--icon-bg: var(--blurple-soft); --icon-color: #A6AEFF;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><circle cx="8" cy="16" r="3"/><circle cx="16" cy="16" r="3"/></svg>
           </div>
@@ -377,7 +506,7 @@
           <span class="cmd mono">/colorgame</span>
         </div>
 
-        <div class="game-card">
+        <div class="game-card reveal">
           <div class="g-icon" style="--icon-bg: var(--green-soft); --icon-color: #6FDB9B;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 000 18"/></svg>
           </div>
@@ -391,23 +520,23 @@
 
   <section id="beyond">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head reveal">
         <span class="kicker">Beyond the tables</span>
         <h2>A whole economy, not just a casino.</h2>
         <p>Coins, pets, Aura, and a rewards loop — everything ties back to the same wallet.</p>
       </div>
 
       <div class="games-grid">
-        <div class="game-card">
+        <div class="game-card reveal">
           <div class="g-icon" style="--icon-bg: var(--gold-soft, rgba(240,178,50,0.16)); --icon-color: #F5C876;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
           </div>
           <h4>Economy</h4>
           <p>Claim 5,000 Coins with /daily, /rob other members, /craft and /sell product, and climb the /leaderboard.</p>
-          <span class="cmd mono">/daily &middot; /rob &middot; /shop</span>
+          <span class="cmd mono">/daily · /rob · /shop</span>
         </div>
 
-        <div class="game-card">
+        <div class="game-card reveal">
           <div class="g-icon" style="--icon-bg: var(--red-soft); --icon-color: #FF8C8E;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.6l-1-1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 000-7.8z"/></svg>
           </div>
@@ -416,25 +545,25 @@
           <span class="cmd mono">/pet</span>
         </div>
 
-        <div class="game-card">
+        <div class="game-card reveal">
           <div class="g-icon" style="--icon-bg: rgba(255,138,80,0.16); --icon-color: #FFA06A;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>
           </div>
           <h4>Aura</h4>
           <p>Build Aura with /smoke or by using weed and coke, and unlock auto-assigned roles from Smoker up to Lv. 100.</p>
-          <span class="cmd mono">/smoke &middot; /use</span>
+          <span class="cmd mono">/smoke · /use</span>
         </div>
 
-        <div class="game-card">
+        <div class="game-card reveal">
           <div class="g-icon" style="--icon-bg: var(--blurple-soft); --icon-color: #A6AEFF;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 00-7.65 0L12 5.35l-.77-.77a5.4 5.4 0 00-7.65 7.65L12 20.4l8.42-8.17a5.4 5.4 0 000-7.65z"/></svg>
           </div>
           <h4>Marriage</h4>
           <p>Propose with a Ring using /marry, share the relationship system with your partner, and /divorce if it doesn't work out.</p>
-          <span class="cmd mono">/marry &middot; /divorce</span>
+          <span class="cmd mono">/marry · /divorce</span>
         </div>
 
-        <div class="game-card">
+        <div class="game-card reveal">
           <div class="g-icon" style="--icon-bg: var(--green-soft); --icon-color: #6FDB9B;">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7S9 2 6.5 2 4 4 4 5.5 6 7 12 7"/><path d="M12 7s3-5 5.5-5S20 4 20 5.5 18 7 12 7"/></svg>
           </div>
@@ -443,13 +572,13 @@
           <span class="cmd mono">/rewards</span>
         </div>
 
-        <div class="game-card">
+        <div class="game-card reveal">
           <div class="g-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
           </div>
           <h4>Server Tools</h4>
           <p>Check /profile, /serverhop to other servers Longba runs, and pull up /help anytime.</p>
-          <span class="cmd mono">/profile &middot; /help</span>
+          <span class="cmd mono">/profile · /help</span>
         </div>
       </div>
     </div>
@@ -457,11 +586,11 @@
 
   <section id="tech">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head reveal">
         <span class="kicker">Under the hood</span>
         <h2>Built on a real stack, open source.</h2>
       </div>
-      <div class="tech-strip">
+      <div class="tech-strip reveal">
         <div class="tech-pill"><span class="pip"></span>discord.js 14</div>
         <div class="tech-pill"><span class="pip"></span>Node.js 18+</div>
         <div class="tech-pill"><span class="pip"></span>lavalink-client</div>
@@ -473,7 +602,7 @@
 
   <section>
     <div class="container">
-      <div class="cta-panel">
+      <div class="cta-panel reveal">
         <h2>Ready to invite?</h2>
         <p>One click, and your server has casino games, an economy, and music.</p>
         <div class="cta-actions">
@@ -510,6 +639,7 @@
   </div>
 </footer>
 
+<!-- Redeem modal (same as before) -->
 <div class="redeem-overlay" id="redeemOverlay" role="dialog" aria-modal="true" aria-labelledby="redeemTitle">
   <div class="redeem-modal">
     <div class="redeem-close" id="redeemClose" role="button" aria-label="Close">
@@ -531,6 +661,39 @@
 </div>
 
 <script>
+  // Floating particles
+  (function(){
+    const container = document.getElementById('particles');
+    const emojis = ['🪙','♠️','♥️','♦️','♣️','🐈‍⬛','💰','🃏','🐱'];
+    const count = 18;
+
+    for(let i=0; i<count; i++){
+      const el = document.createElement('div');
+      el.className = 'particle';
+      el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      el.style.left = Math.random()*100 + 'vw';
+      el.style.fontSize = (14 + Math.random()*16) + 'px';
+      el.style.animationDuration = (12 + Math.random()*18) + 's';
+      el.style.animationDelay = (Math.random()*12) + 's';
+      container.appendChild(el);
+    }
+  })();
+
+  // Scroll reveal
+  (function(){
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+  })();
+
+  // Redeem modal (same as original)
   (function(){
     const overlay = document.getElementById('redeemOverlay');
     const keyText = document.getElementById('redeemKeyText');
